@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="fr_FR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{% block title %}Vetux-line{% endblock %}</title>
+    {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('css/index.css') }}">
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:500&display=swap" rel="stylesheet">
+    {% endblock %}
+</head>
+<body id="main_page">
+{% block header %}
+    {% if app.user %}
+        <header>
+            <nav class="navbar">
+                <img id="vetux_logo" src="https://rl.goodlive.me/logos/Seventeen%20Elitists.png" alt="">
+                <a id="title_website" href="{{ path("admin_show_customers") }}">Vetux-Line</a>
+                <div class="menu">
+                       <ul class="btn_menu">
+                           <li class="btn_menu">
+                                <a class="btn_gen" href="{{ path("admin_show_customers") }}">Afficher clients</a></li>
+                           <li class="btn_menu">
+                                <a class="btn_gen" href="{{ path("admin_add_customers") }}">Ajout client</a></li>
+                           <li class="btn_menu">
+                                <a class="btn_gen" href="{{ path("admin_merge") }}">Fusion CSV</a></li>
+                           <li class="btn_menu">
+                                <a class="btn_gen" href="{{ path("admin_invalid_customers") }}">Clients invalides</a></li>
+                                <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+                                    <i class="fa fa-bars"></i>
+                                </a>
+                           <li class="btn_menu">
+                                {% if app.user %}
+                                   <a class="deco"href="{{ path("security_logout") }}">D&eacute;connexion</a>
+                                {% endif %}
+                           </li>
+    {% endif %}
+                       </ul>
+                </div>
+            </nav>
+        </header>
+
+{% endblock %}
+<main class="mt-5 mb-5">
+    <div class="col-md-8 col-12 mx-auto">
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success text-center">{{ message }}</div>
+        {% endfor %}
+        {% for message in app.flashes('error') %}
+            <div class="alert alert-danger text-center">{{ message }}</div>
+        {% endfor %}
+    </div>
+    {% block main %}{% endblock %}
+</main>
+</body>
+<footer>
+    &#169; Copyright, all right reserved to Brancodeurs
+</footer>
+</html>

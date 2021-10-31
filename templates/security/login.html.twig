@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Vetux-line : Connexion{% endblock %}
+
+{% block main %}
+        <img src="{{ asset('css/bc_logo.png') }}" id="logo_bc" title="Logo Brancodeurs" />
+        <form id="login_form" method="post">
+            {% if error %}
+                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            {% endif %}
+
+            {% if app.user %}
+                <div class="mb-3">
+                    You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Se d&eacute;connecter</a>
+                </div>
+            {% endif %}
+
+            <ul>
+                <li><h1 class="connexion">Connexion</h1></li>
+                <li><label for="inputUsername">Nom de compte</label></li>
+                <li><input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="form-control" autocomplete="username" required autofocus></li><br/>
+                <li><label for="inputPassword">Mot de passe</label></li>
+                <li><input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required></li>
+                <li><button class="btn-lg" type="submit">
+                        Se connecter
+                    </button></li>
+            </ul>
+
+            <input type="hidden" name="_csrf_token"
+                   value="{{ csrf_token('authenticate') }}"
+            >
+
+        </form>
+
+{% endblock %}

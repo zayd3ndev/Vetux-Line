@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Vetux-line : Client invalides{% endblock %}
+
+{% block main %}
+    <section class="container">
+        <div class="row">
+            <div class="form_fusion">
+                <h2 class="fusion_title">Clients avec des données invalides</h2>
+                    {{ form_start(csvForm) }}
+                        {{ form_row(csvForm.invalid) }}
+                        {{ form_row(csvForm.csv) }}
+                        <button class="btn_dl"><strong>{{ button_label | default("Download Csv") }}</strong></button>
+                    {{ form_end(csvForm) }}
+            </div>
+        </div>
+    </section>
+{% endblock %}

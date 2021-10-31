@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Vetux-line : Tableau des clients{% endblock %}
+
+{% block main %}
+    <section class="container-fluid">
+       <div class="row mx-auto">
+
+           <div class="text-right col-7 mx-auto">
+               <p>Il y a {{ customers | length }} {% if customers | length >= 1 %}clients{% else %}client{% endif %} dans la base de données</p>
+               {% if customers | length > 1 %}<p><a class="btn-lg" href="{{ path('admin_reset') }}">Reset données</a></p>{% endif %}
+           </div>
+
+           <div class=" mx-auto" id="piechart"></div>
+
+           <div class="col-12 overflow-auto">
+               <table class="data-table">
+                   <thead>
+                       <tr>
+                           <th>id</th>
+                           <th>Titre</th>
+                           <th>Surnom</th>
+                           <th>Pr&eacute;nom</th>
+                           <th>Nom</th>
+                           <th>Mail</th>
+                           <th>Date naissance</th>
+                           <th>Num.Tel</th>
+                           <th>Cardtype</th>
+                           <th>CardNumber</th>
+                           <th>cvv2</th>
+                           <th>Adresse</th>
+                           <th>Ville</th>
+                           <th>Taille</th>
+                           <th>Poids</th>
+                           <th>V&eacute;hicule</th>
+                       </tr>
+                   </thead>
+                   <tbody>
+                   {% for customer in customers | reverse %}
+                       <tr>
+                           <td>{{ customer.id }}</td>
+                           <td>{{ customer.title }}</td>
+                           <td>{{ customer.surname }}</td>
+                           <td>{{ customer.givenName }}</td>
+                           <td>{{ customer.emailAddress }}</td>
+                           <td>{{ customer.birthday }}</td>
+                           <td>{{ customer.telephoneNumber }}</td>
+                           <td>{{ customer.ccType }}</td>
+                           <td>{{ customer.ccNumber }}</td>
+                           <td>{{ customer.cvv2 }}</td>
+                           <td>{{ customer.streetAddress }}</td>
+                           <td>{{ customer.city }}</td>
+                           <td>{{ customer.countryFull }}</td>
+                           <td>{{ customer.centimeters }}</td>
+                           <td>{{ customer.kilograms }}</td>
+                           <td>{{ customer.vehicle.year ~ " " ~ customer.vehicle.mark.name ~ " " ~ customer.vehicle.model }}</td>
+                       </tr>
+                   {% endfor %}
+                   </tbody>
+               </table>
+               <div class="blank-space" style="height: 3em;"></div>
+           </div>
+       </div>
+    </section>
+{% endblock %}
+

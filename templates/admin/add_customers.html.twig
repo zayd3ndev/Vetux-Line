@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Vetux-line : Ajouts des clients{% endblock %}
+
+{% block main %}
+    <section class="container">
+        <div class="row">
+            <div class="form_fusion">
+                <h2 class="fusion_title">Ajout d'utilisateur</h2>
+                    {{ form_start(csvForm) }}
+                    {{ form_row(csvForm.csv) }}
+                    <button class="btn_dl">{{ button_label | default("Ajout") }}</button>
+                    {{ form_end(csvForm) }}
+            </div>
+            <div class="blank-space" style="height: 5em;"></div>
+        </div>
+    </section>
+{% endblock %}
