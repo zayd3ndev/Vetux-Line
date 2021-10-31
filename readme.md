@@ -28,7 +28,7 @@ Les premières étapes pour le projet étaient ces commandes pour la création d
 
 Ensuite nous avons créé la base de données phpMyAdmin pour le projet. Pour cela nous avons réduit la taille des deux fichiers csv comme demandé. Nous obtenons donc deux tables.
 
-<img src="public/css/readme_screens/1.png">
+<img src="public/css/readme_screens/1.png" />
 
 Nous allons utiliser ces tables pour l’entièreté du projet. Si nous voulons utiliser les fichiers complets (2000 et 3000 lignes), il nous suffira d’augmenter la taille maximale de fichiers sur la DDB. Mais pour rendre les tests plus simples et compréhensifs, nous resterons avec les petits fichiers.
 
