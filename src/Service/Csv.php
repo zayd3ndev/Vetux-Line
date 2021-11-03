@@ -10,7 +10,8 @@ class Csv
     /**
      * @return string[]
      */
-    public static function getSpecificColumns(){
+    public static function getSpecificColumns(): array
+    {
         return ['Gender', 'Title', 'Surname', 'GivenName', 'EmailAddress', 'Birthday', 'TelephoneNumber', 'CCType', 'CCNumber', 'CVV2', 'CCExpires', 'StreetAddress', 'City', 'ZipCode', 'CountryFull', 'Centimeters', 'Kilograms', 'Vehicle', 'Latitude', 'Longitude'];
     }
 
@@ -19,7 +20,8 @@ class Csv
      * @return string[]
      * @throws \League\Csv\Exception
      */
-    public static function getCsvHeader($csvDescriptor){
+    public static function getCsvHeader($csvDescriptor): array
+    {
         return Reader::createFromPath($csvDescriptor)->setHeaderOffset(0)->getHeader();
     }
 
@@ -27,7 +29,8 @@ class Csv
      * @param $uploadedCsvHeader
      * @return bool
      */
-    public static function isValidCsvHeader($uploadedCsvHeader){
+    public static function isValidCsvHeader($uploadedCsvHeader): bool
+    {
         $uploadedCsvHeader = array_map('strtolower', $uploadedCsvHeader);
         $i = 0;
         $csvColumns = array_map('strtolower', Csv::getSpecificColumns());
@@ -36,7 +39,26 @@ class Csv
                 $i++;
             }
         }
-        return ($i === count($csvColumns)) ? true : false;
+        return $i === count($csvColumns);
+    }
+
+    /**
+     * @param $csv1Data
+     * @param $csv2Data
+     * @return array
+     */
+    public static function getArrayOfCsvCcNumber2Csv($csv1Data, $csv2Data): array
+    {
+        $arrayOfCcNumber = [];
+        foreach ($csv1Data as $data) {
+            $data = array_change_key_case($data, CASE_LOWER);
+            $arrayOfCcNumber[] = $data["ccnumber"];
+        }
+        foreach ($csv2Data as $data) {
+            $data = array_change_key_case($data, CASE_LOWER);
+            $arrayOfCcNumber[] = $data["ccnumber"];
+        }
+        return $arrayOfCcNumber;
     }
 
     /**
@@ -53,13 +75,10 @@ class Csv
      * @param $csvData
      * @return array
      */
-    public static function getArrayOfCsvCcNumber($csv1Data, $csv2Data = []){
+    public static function getArrayOfCsvCcNumber($csvData): array
+    {
         $arrayOfCcNumber = [];
-        foreach ($csv1Data as $data) {
-            $data = array_change_key_case($data, CASE_LOWER);
-            $arrayOfCcNumber[] = $data["ccnumber"];
-        }
-        foreach ($csv2Data as $data) {
+        foreach ($csvData as $data) {
             $data = array_change_key_case($data, CASE_LOWER);
             $arrayOfCcNumber[] = $data["ccnumber"];
         }
