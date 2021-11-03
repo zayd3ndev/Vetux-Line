@@ -7,6 +7,7 @@ namespace App\Service;
 use App\Service\Csv;
 use App\Service\Verification;
 use League\Csv\CannotInsertRecord;
+use League\Csv\Exception;
 use League\Csv\Reader;
 use League\Csv\Writer;
 
@@ -21,7 +22,7 @@ class Invalid
     /**
      * @param $csvDescriptor
      * @throws CannotInsertRecord
-     * @throws \League\Csv\Exception
+     * @throws Exception
      */
     public function __construct($csvDescriptor){
         $this->csv =  Reader::createFromPath($csvDescriptor)->setHeaderOffset(0);
@@ -59,33 +60,39 @@ class Invalid
 
     /**
      * @return bool
+     * @throws CannotInsertRecord
      */
-    public function notMajor(){
+    public function notMajor(): bool
+    {
         $this->insertIntoInvalidCsv();
-        return ($this->insert === 1) ? true : false;
+        return $this->insert === 1;
     }
 
     /**
      * @return bool
+     * @throws CannotInsertRecord
      */
-    public function invalidSize(){
+    public function invalidSize(): bool
+    {
         $this->insertIntoInvalidCsv();
-        return ($this->insert === 1) ? true : false;
+        return $this->insert === 1;
     }
 
     /**
      * @return bool
+     * @throws CannotInsertRecord
      */
-    public function invalidCcNumber(){
+    public function invalidCcNumber(): bool
+    {
         $this->insertIntoInvalidCsv();
-        return ($this->insert === 1) ? true : false;
+        return $this->insert === 1;
     }
 
     /**
      * @param string $csvName
      * @return int
      */
-    public function downloadCsv($csvName = "invalid.csv"){
+    public function downloadCsv(string $csvName = "invalid.csv"){
         return $this->invalidCsv->output($csvName);
     }
 
