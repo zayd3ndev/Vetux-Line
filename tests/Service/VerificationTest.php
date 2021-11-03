@@ -1,46 +1,38 @@
 <?php
 
-namespace App\Tests\Service;
+namespace App\Service;
 
-use App\Service\Verification;
-use PHPUnit\Framework\TestCase;
-
-class VerificationTest extends TestCase
+class Verification
 {
-    public function testValidDate(){
-        // Format m/d/Y
-        // valid
-        $this->assertTrue(Verification::isValidDate("08/12/2001"));
-        $this->assertTrue(Verification::isValidDate("12/12/2001"));
 
-        // invalid
-        $this->assertFalse(Verification::isValidDate("78/72/1990"));
-        $this->assertFalse(Verification::isValidDate("02/30/1990"));
-    }
-
-    public function testIsMajorWithValidDateFormat()
+    /**
+     * @param $dateCli
+     * @return bool
+     * @throws \Exception
+     */
+    public static function isMajor($dateCli): bool
     {
-        // Major
-        $this->assertTrue(Verification::isMajor("08/12/2001"));
-
-        // Minor
-        $this->assertFalse(Verification::isMajor("05/11/2005"));
+        $dateClient = new \DateTime($dateCli);
+        $today = new \DateTime('now');
+        $diff = $today->diff($dateClient);
+        $age = $diff->y;
+        if ($age >= 18) {
+            return true;
+        }
+        return false;
     }
 
-    public function testIsMajorWithInvalidDateFormat()
+    /**
+     * @param $inch
+     * @param $cm
+     * @return bool
+     */
+    public static function isValidSize($inch, $cm): bool
     {
-        $this->assertFalse(Verification::isMajor("03/09/20062"));
-        $this->assertFalse(Verification::isMajor("dalil"));
-        $this->assertFalse(Verification::isMajor("03/09/20"));
-        $this->assertFalse(Verification::isMajor("03/az09d/2020"));
-    }
-
-    public function testValidSize(){
-        // Valid
-        $this->assertTrue(Verification::isValidSize("5' 7\"", 171));
-
-        // invalid
-        $this->assertFalse(Verification::isValidSize("9' 7\"", 11));
+        $inches = $cm/2.54;
+        $feet = intval($inches/12);
+        $inches = $inches%12;
+        return sprintf("%d"."' "."%d".'"', $feet, $inches) === $inch;
     }
 
 }
